@@ -6,6 +6,7 @@ import {
   Title,
   Paragraph,
   ActivityIndicator,
+  Button,
 } from 'react-native-paper';
 import {FlatList, StyleSheet} from 'react-native';
 import {useMangalist} from '../../hooks/useManga';
@@ -39,6 +40,11 @@ export const HomeScreen = () => {
     <View style={styles.background}>
       <Appbar.Header>
         <Appbar.Content title="Manga App" />
+        <Button
+          mode="contained"
+          onPress={() => setOffset((prev: any) => prev + 20)}>
+          Load More
+        </Button>
       </Appbar.Header>
       <FlatList
         data={data?.data}
@@ -49,7 +55,7 @@ export const HomeScreen = () => {
         numColumns={2}
         contentContainerStyle={styles.gridContainer}
         columnWrapperStyle={styles.columnWapper}
-        onEndReached={() => setOffset((prev: any) => prev + 20)}
+        //onEndReached={() => setOffset((prev: any) => prev + 20)}
         onEndReachedThreshold={0.5}
       />
     </View>
@@ -69,7 +75,8 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   gridContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 5,
+    paddingBottom: 100,
   },
   columnWapper: {
     justifyContent: 'space-between',

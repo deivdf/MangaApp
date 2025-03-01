@@ -15,8 +15,13 @@ export const MangaCard: React.FC<MangaCardProps> = ({manga, onPress}) => {
       <Card style={styles.card}>
         <Card.Cover source={{uri: coverUrl}} style={styles.cardImage} />
         <Card.Content>
-          <Title style={{fontSize: 10}}>{manga.attributes.title.en}</Title>
-          <Paragraph numberOfLines={2} ellipsizeMode="tail">
+          <Title style={{fontSize: 13}} numberOfLines={2}>
+            {manga.attributes.title.en}
+          </Title>
+          <Paragraph
+            style={{fontSize: 10}}
+            numberOfLines={1}
+            ellipsizeMode="tail">
             {manga.attributes.tags.map(t => t.attributes.name.en).join(', ')}
           </Paragraph>
         </Card.Content>
