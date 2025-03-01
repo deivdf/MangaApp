@@ -5,7 +5,7 @@ import {MangaListResponse} from '../services/types/manga';
 const fetchManga = async (offset: number): Promise<MangaListResponse> => {
   const {data} = await client.get('/manga', {
     params: {
-      limit: 40,
+      limit: 20,
       offset,
       includes: ['cover_art'],
     },

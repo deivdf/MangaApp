@@ -6,8 +6,10 @@ interface MangaCardProps {
   onPress: () => void;
 }
 export const MangaCard: React.FC<MangaCardProps> = ({manga, onPress}) => {
-  const coverArt = manga.relationships.find(r => r.type === 'cover_art')?.id;
-  const coverUrl = `https://uploads.mangadex.org/covers/${manga.id}/${coverArt}.256.jpg`;
+  const coverArt = manga.relationships.find(r => r.type === 'cover_art');
+  const coverUrl = coverArt?.attributes?.fileName
+    ? `https://uploads.mangadex.org/covers/${manga.id}/${coverArt.attributes.fileName}`
+    : 'https://via.placeholder.com/150';
   return (
     <TouchableOpacity onPress={onPress}>
       <Card style={styles.card}>
@@ -15,8 +17,7 @@ export const MangaCard: React.FC<MangaCardProps> = ({manga, onPress}) => {
         <Card.Content>
           <Title style={{fontSize: 10}}>{manga.attributes.title.en}</Title>
           <Paragraph numberOfLines={2} ellipsizeMode="tail">
-            {manga.attributes.description.en?.substring(0, 100) ||
-              'No description available'}
+            {manga.attributes.tags.map(t => t.attributes.name.en).join(', ')}
           </Paragraph>
         </Card.Content>
       </Card>
@@ -33,5 +34,6 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     height: 150,
+    resizeMode: 'cover',
   },
 });

@@ -4,15 +4,18 @@ interface Manga {
   attributes: {
     title: {
       en: string;
+      es?: string;
     };
     description: {
       en: string;
+      es?: string;
     };
     lastChapter?: string;
     tags: Array<{
-      atributes: {
+      attributes: {
         name: {
           en: string;
+          es?: string;
         };
       };
     }>;
@@ -20,6 +23,9 @@ interface Manga {
   relationships: Array<{
     id: string;
     type: 'cover_art' | 'author';
+    attributes?: {
+      fileName?: string;
+    };
   }>;
 }
 interface MangaListResponse {
