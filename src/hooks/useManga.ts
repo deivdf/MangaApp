@@ -17,6 +17,6 @@ export const useMangalist = (offset: number) => {
   return useQuery({
     queryKey: ['mangalist', offset],
     queryFn: () => fetchManga(offset),
-    staleTime: 100 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
   });
 };

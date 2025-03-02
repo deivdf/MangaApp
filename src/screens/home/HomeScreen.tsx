@@ -1,19 +1,14 @@
 import {useState} from 'react';
 import {View} from 'react-native';
-import {
-  Appbar,
-  Card,
-  Title,
-  Paragraph,
-  ActivityIndicator,
-  Button,
-} from 'react-native-paper';
+import {Card, Title, Paragraph, ActivityIndicator} from 'react-native-paper';
 import {FlatList, StyleSheet} from 'react-native';
 import {useMangalist} from '../../hooks/useManga';
 import {MangaCard} from '../../components/manga/MangaCard';
 import {Alert} from 'react-native';
+import {ButtonPage} from '../../components/bottons/BottonPage';
 export const HomeScreen = () => {
   const [offset, setOffset] = useState(0);
+  const [recarga, setRecarga] = useState(false);
   const {data, isLoading, isError, error} = useMangalist(offset);
   const handleMangaPress = () => {
     Alert.alert('Manga Pressed');
@@ -38,14 +33,6 @@ export const HomeScreen = () => {
   }
   return (
     <View style={styles.background}>
-      <Appbar.Header>
-        <Appbar.Content title="Manga App" />
-        <Button
-          mode="contained"
-          onPress={() => setOffset((prev: any) => prev + 20)}>
-          Load More
-        </Button>
-      </Appbar.Header>
       <FlatList
         data={data?.data}
         keyExtractor={item => item.id}
@@ -55,9 +42,10 @@ export const HomeScreen = () => {
         numColumns={2}
         contentContainerStyle={styles.gridContainer}
         columnWrapperStyle={styles.columnWapper}
-        //onEndReached={() => setOffset((prev: any) => prev + 20)}
-        onEndReachedThreshold={0.5}
+        //style={styles.faslist}
       />
+
+      <ButtonPage offset={offset} setOffset={setOffset} data={data} />
     </View>
   );
 };
@@ -76,7 +64,10 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     paddingHorizontal: 5,
-    paddingBottom: 100,
+    //paddingBottom: 100,
+  },
+  faslist: {
+    flex: 1,
   },
   columnWapper: {
     justifyContent: 'space-between',
