@@ -4,15 +4,21 @@ import {Card, Title, Paragraph, ActivityIndicator} from 'react-native-paper';
 import {FlatList, StyleSheet} from 'react-native';
 import {useMangalist} from '../../hooks/useManga';
 import {MangaCard} from '../../components/manga/MangaCard';
-import {Alert} from 'react-native';
 import {ButtonPage} from '../../components/bottons/BottonPage';
+import {MangaModal} from '../../components/modals/MangaModal';
+import {Manga} from '../../services/types/manga';
+//import {Manga} from '../../services/types/manga';
 export const HomeScreen = () => {
   const [offset, setOffset] = useState(0);
-  const [recarga, setRecarga] = useState(false);
+  //const [recarga, setRecarga] = useState(false);
   const {data, isLoading, isError, error} = useMangalist(offset);
-  const handleMangaPress = () => {
-    Alert.alert('Manga Pressed');
+  const [visible, setVisible] = useState(false);
+  const [selectedManga, setSelectedManga] = useState<Manga | null>(null);
+  const showModal = (manga: Manga) => {
+    setSelectedManga(manga);
+    setVisible(true);
   };
+  const hidenModal = () => setVisible(false);
   if (isLoading) {
     <ActivityIndicator
       style={styles.center}
@@ -33,19 +39,24 @@ export const HomeScreen = () => {
   }
   return (
     <View style={styles.background}>
+      <ButtonPage offset={offset} setOffset={setOffset} data={data} />
       <FlatList
         data={data?.data}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <MangaCard manga={item} onPress={handleMangaPress} />
+          <View>
+            <MangaCard manga={item} onPress={() => showModal(item)} />
+          </View>
         )}
         numColumns={2}
         contentContainerStyle={styles.gridContainer}
         columnWrapperStyle={styles.columnWapper}
-        //style={styles.faslist}
       />
-
-      <ButtonPage offset={offset} setOffset={setOffset} data={data} />
+      <MangaModal
+        visible={visible}
+        hidenModal={hidenModal}
+        manga={selectedManga}
+      />
     </View>
   );
 };
@@ -64,10 +75,7 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     paddingHorizontal: 5,
-    //paddingBottom: 100,
-  },
-  faslist: {
-    flex: 1,
+    paddingBottom: 70,
   },
   columnWapper: {
     justifyContent: 'space-between',

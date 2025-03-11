@@ -1,8 +1,8 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeScreen} from '../screens/home/HomeScreen';
-import {SerchScreen} from '../screens/serch/SerchScreen';
+import {HomeScreen} from '../../screens/home/HomeScreen';
+import {SerchScreen} from '../../screens/serch/SerchScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {SaveMangaScreen} from '../screens/manga/SaveMangaScreen';
+import {SaveMangaScreen} from '../../screens/manga/SaveMangaScreen';
 
 const Tab = createBottomTabNavigator();
 

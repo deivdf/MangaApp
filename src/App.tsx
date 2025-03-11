@@ -4,7 +4,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {BottomNavigatorTab} from './hooks/BottomNavigatorTab';
+import {BottomNavigatorTab} from './components/shared/BottomNavigatorTab';
 
 const queryClient = new QueryClient();
 
