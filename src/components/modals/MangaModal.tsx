@@ -18,9 +18,9 @@ export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
       <Modal visible={visible} onDismiss={hidenModal} style={styles.container}>
         <View style={styles.textcontainer}>
           <Image source={{uri: coverUrl}} style={styles.image} />
-          <Title>{manga?.attributes.title.en}</Title>
+          <Title style={styles.title}>{manga?.attributes.title.en}</Title>
           <ScrollView>
-            <Text>
+            <Text style={styles.text}>
               {manga?.attributes.description.es?.length
                 ? manga?.attributes.description.es
                 : manga?.attributes.description.en}
@@ -48,11 +48,16 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   textcontainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 13,
   },
   image: {
     width: '100%',
