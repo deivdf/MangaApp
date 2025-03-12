@@ -1,23 +1,31 @@
 import {Modal, Portal, Text, Title} from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {Manga} from '../../services/types/manga';
+import {ScrollView} from 'react-native';
 interface ModalProps {
   visible: boolean;
   hidenModal: () => void;
-  manga: Manga | null;
+  manga: Manga;
 }
 
 export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
+  const coverArt = manga?.relationships.find(r => r.type === 'cover_art');
+  const coverUrl = coverArt?.attributes?.fileName
+    ? `https://uploads.mangadex.org/covers/${manga.id}/${coverArt.attributes.fileName}`
+    : 'https://via.placeholder.com/150';
   return (
     <Portal>
       <Modal visible={visible} onDismiss={hidenModal} style={styles.container}>
         <View style={styles.textcontainer}>
+          <Image source={{uri: coverUrl}} style={styles.image} />
           <Title>{manga?.attributes.title.en}</Title>
-          <Text>
-            {manga?.attributes.description.es?.length
-              ? manga?.attributes.description.es
-              : manga?.attributes.description.en}
-          </Text>
+          <ScrollView>
+            <Text>
+              {manga?.attributes.description.es?.length
+                ? manga?.attributes.description.es
+                : manga?.attributes.description.en}
+            </Text>
+          </ScrollView>
         </View>
       </Modal>
     </Portal>
@@ -42,8 +50,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textcontainer: {
-    flex: 0.9,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'contain',
   },
 });
