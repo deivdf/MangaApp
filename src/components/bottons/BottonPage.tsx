@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   background: {
-    backgroundColor: '#d0d0d0',
+    //backgroundColor: '#d0d0d0',
   },
   card: {
     margin: 16,

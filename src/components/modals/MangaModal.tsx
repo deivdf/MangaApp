@@ -1,7 +1,8 @@
-import {Modal, Portal, Text, Title} from 'react-native-paper';
+import {Button, Modal, Portal, Text, Title} from 'react-native-paper';
 import {Image, StyleSheet, View} from 'react-native';
 import {Manga} from '../../services/types/manga';
 import {ScrollView} from 'react-native';
+//import {useNavigation} from '@react-navigation/native';
 interface ModalProps {
   visible: boolean;
   hidenModal: () => void;
@@ -9,6 +10,7 @@ interface ModalProps {
 }
 
 export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
+  //const navigation = useNavigation();
   const coverArt = manga?.relationships.find(r => r.type === 'cover_art');
   const coverUrl = coverArt?.attributes?.fileName
     ? `https://uploads.mangadex.org/covers/${manga.id}/${coverArt.attributes.fileName}`
@@ -26,6 +28,7 @@ export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
                 : manga?.attributes.description.en}
             </Text>
           </ScrollView>
+          <Button>Leer</Button>
         </View>
       </Modal>
     </Portal>

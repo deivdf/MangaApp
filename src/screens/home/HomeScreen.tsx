@@ -38,7 +38,7 @@ export const HomeScreen = () => {
     );
   }
   return (
-    <View style={styles.background}>
+    <View style={styles.center}>
       <ButtonPage offset={offset} setOffset={setOffset} data={data} />
       <FlatList
         data={data?.data}
@@ -65,10 +65,8 @@ const styles = StyleSheet.create({
   center: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  background: {
     backgroundColor: '#d0d0d0',
+    alignItems: 'center',
   },
   card: {
     margin: 16,
