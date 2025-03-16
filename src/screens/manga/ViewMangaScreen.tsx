@@ -1,6 +1,6 @@
 import {Text, View} from 'react-native';
 
-export const ViewManga = () => {
+export const ViewMangaScreen = () => {
   return (
     <View>
       <Text>Manga Screen</Text>

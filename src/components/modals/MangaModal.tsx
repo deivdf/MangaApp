@@ -35,6 +35,8 @@ export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
   );
 };
 
+
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
