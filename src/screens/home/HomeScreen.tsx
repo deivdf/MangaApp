@@ -8,7 +8,7 @@ import {ButtonPage} from '../../components/bottons/BottonPage';
 import {MangaModal} from '../../components/modals/MangaModal';
 import {Manga} from '../../services/types/manga';
 //import {Manga} from '../../services/types/manga';
-export const HomeScreen = () => {
+export const HomeScreen = ({navigation}: any) => {
   const [offset, setOffset] = useState(0);
   //const [recarga, setRecarga] = useState(false);
   const {data, isLoading, isError, error} = useMangalist(offset);
@@ -55,6 +55,7 @@ export const HomeScreen = () => {
       <MangaModal
         visible={visible}
         hidenModal={hidenModal}
+        navigation={navigation}
         manga={selectedManga}
       />
     </View>
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     paddingHorizontal: 5,
-    paddingBottom: 70,
+    paddingBottom: 10,
   },
   columnWapper: {
     justifyContent: 'space-between',

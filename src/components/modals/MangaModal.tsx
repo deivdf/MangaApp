@@ -1,20 +1,26 @@
 import {Button, Modal, Portal, Text, Title} from 'react-native-paper';
 import {Image, StyleSheet, View} from 'react-native';
-import {Manga} from '../../services/types/manga';
 import {ScrollView} from 'react-native';
-//import {useNavigation} from '@react-navigation/native';
+import {Manga} from '../../services/types/manga';
+import {NavigationProp} from '@react-navigation/native';
 interface ModalProps {
   visible: boolean;
   hidenModal: () => void;
-  manga: Manga;
+  manga: Manga | null;
+  navigation: NavigationProp<any>;
 }
 
-export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
-  //const navigation = useNavigation();
+export const MangaModal = ({
+  visible,
+  hidenModal,
+  manga,
+  navigation,
+}: ModalProps) => {
   const coverArt = manga?.relationships.find(r => r.type === 'cover_art');
   const coverUrl = coverArt?.attributes?.fileName
-    ? `https://uploads.mangadex.org/covers/${manga.id}/${coverArt.attributes.fileName}`
+    ? `https://uploads.mangadex.org/covers/${manga?.id}/${coverArt.attributes.fileName}`
     : 'https://via.placeholder.com/150';
+
   return (
     <Portal>
       <Modal visible={visible} onDismiss={hidenModal} style={styles.container}>
@@ -25,17 +31,22 @@ export const MangaModal = ({visible, hidenModal, manga}: ModalProps) => {
             <Text style={styles.text}>
               {manga?.attributes.description.es?.length
                 ? manga?.attributes.description.es
-                : manga?.attributes.description.en}
+                : manga?.attributes.description.en ||
+                  'descripción no encontrada'}
             </Text>
           </ScrollView>
-          <Button>Leer</Button>
+          <Button
+            onPress={() => {
+              hidenModal();
+              navigation.navigate('ViewMangaScreen', {manga});
+            }}>
+            Leer
+          </Button>
         </View>
       </Modal>
     </Portal>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +64,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   textcontainer: {
