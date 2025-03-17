@@ -15,6 +15,7 @@ export const ButtonPage = ({offset, setOffset, data}: ButtonPageProps) => {
     <View style={styles.paginationContainer}>
       <Button
         mode="contained"
+        buttonColor="#2090f9"
         onPress={() => setOffset((prev: any) => Math.max(prev - limit, 0))}
         disabled={isFirstPage}
         style={styles.button}>
@@ -22,6 +23,7 @@ export const ButtonPage = ({offset, setOffset, data}: ButtonPageProps) => {
       </Button>
       <Button
         mode="contained"
+        buttonColor="#2090f9"
         onPress={() => setOffset((prev: any) => prev + limit)}
         disabled={isLastPage}
         style={styles.button}>

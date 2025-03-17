@@ -36,6 +36,7 @@ export const MangaModal = ({
             </Text>
           </ScrollView>
           <Button
+            textColor="#2090f9"
             onPress={() => {
               if (!manga) return;
               hidenModal();

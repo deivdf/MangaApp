@@ -8,8 +8,8 @@ import {ViewMangaScreen} from '../../screens/manga/ViewMangaScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const screenOption = ({route}) => ({
-  tabBarIcon: ({focused, color, size}) => {
+const screenOption = ({route}: any) => ({
+  tabBarIcon: ({focused, color, size}: any) => {
     let iconName;
 
     if (route.name === 'Home') {
