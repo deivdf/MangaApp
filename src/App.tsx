@@ -1,7 +1,7 @@
 import React from 'react';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider as PaperProvider} from 'react-native-paper';
+import {Provider as PaperProvider, MD3LightTheme} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomNavigatorTab} from './components/shared/BottomNavigatorTab';
@@ -13,7 +13,7 @@ export const App = () => {
     <NavigationContainer>
       <SafeAreaProvider style={styles.container}>
         <QueryClientProvider client={queryClient}>
-          <PaperProvider>
+          <PaperProvider theme={MD3LightTheme}>
             <BottomNavigatorTab />
           </PaperProvider>
         </QueryClientProvider>
