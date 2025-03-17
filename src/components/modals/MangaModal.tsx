@@ -37,6 +37,7 @@ export const MangaModal = ({
           </ScrollView>
           <Button
             onPress={() => {
+              if (!manga) return;
               hidenModal();
               navigation.navigate('ViewMangaScreen', {manga});
             }}>
