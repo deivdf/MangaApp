@@ -1,15 +1,7 @@
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Manga} from '../../services/types/manga';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {Title} from 'react-native-paper';
-import {ChapetersRespones} from '../../services/types/manga';
 import {useMangaCaplist} from '../../hooks/useManga';
 type Mangaprops = {
   ViewMangaScreen: {manga: Manga};
