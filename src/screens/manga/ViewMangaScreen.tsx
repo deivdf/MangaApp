@@ -1,7 +1,16 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {Manga} from '../../services/types/manga';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {Title} from 'react-native-paper';
+import {ChapetersRespones} from '../../services/types/manga';
+import {useMangaCaplist} from '../../hooks/useManga';
 type Mangaprops = {
   ViewMangaScreen: {manga: Manga};
 };
@@ -13,6 +22,8 @@ export const ViewMangaScreen = () => {
   const coverUrl = coverArt?.attributes?.fileName
     ? `https://uploads.mangadex.org/covers/${manga?.id}/${coverArt.attributes.fileName}`
     : 'https://via.placeholder.com/150';
+  const id = manga?.id;
+  const {data} = useMangaCaplist(id);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -24,7 +35,7 @@ export const ViewMangaScreen = () => {
             : manga?.attributes.description.en || 'descripción no encontrada'}
         </Text>
         <Text style={styles.capitulos}>
-          Capítulos: {manga?.attributes.lastChapter}
+          Capítulos: {data?.data?.length || 'No hay capítulos'}
         </Text>
       </View>
     </ScrollView>
@@ -46,7 +57,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 250,
+    height: 350,
     resizeMode: 'contain',
   },
   description: {

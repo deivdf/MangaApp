@@ -28,6 +28,41 @@ interface Manga {
     };
   }>;
 }
+interface ChapterAttributes {
+  volume: string | null;
+  chapter: string;
+  title: string | null;
+  translatedLanguage: string;
+  externalUrl: string | null;
+  publishAt: string;
+  readableAt: string;
+  createdAt: string;
+  updatedAt: string;
+  pages: number;
+  version: number;
+}
+
+interface Relationship {
+  id: string;
+  type: string;
+}
+
+interface Chapter {
+  id: string;
+  type: string;
+  attributes: ChapterAttributes;
+  relationships: Relationship[];
+}
+
+interface ChapetersRespones {
+  result: string;
+  response: string;
+  data: Chapter[];
+  limit: number;
+  offset: number;
+  total: number;
+}
+
 interface MangaListResponse {
   data: Manga[];
   limit: number;
@@ -35,4 +70,4 @@ interface MangaListResponse {
   total: number;
 }
 
-export {Manga, MangaListResponse};
+export {Manga, MangaListResponse, Chapter, ChapetersRespones};
