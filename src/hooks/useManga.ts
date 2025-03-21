@@ -14,7 +14,11 @@ const fetchManga = async (offset: number): Promise<MangaListResponse> => {
 };
 
 const fetchMangaCaplist = async (id: string): Promise<ChapetersRespones> => {
-  const {data} = await client.get(`/manga/${id}/feed`);
+  const {data} = await client.get(`/manga/${id}/feed`, {
+    params: {
+      'translatedLanguage[]': ['es', 'en'],
+    },
+  });
   return data;
 };
 export const useMangalist = (offset: number) => {

@@ -1,12 +1,23 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {Manga} from '../../services/types/manga';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {Title} from 'react-native-paper';
 import {useMangaCaplist} from '../../hooks/useManga';
+
 type Mangaprops = {
   ViewMangaScreen: {manga: Manga};
 };
+
 type ViewMangaScreenRouteProp = RouteProp<Mangaprops, 'ViewMangaScreen'>;
+
 export const ViewMangaScreen = () => {
   const route = useRoute<ViewMangaScreenRouteProp>(); // Obtiene los params
   const {manga} = route.params;
@@ -16,6 +27,23 @@ export const ViewMangaScreen = () => {
     : 'https://via.placeholder.com/150';
   const id = manga?.id;
   const {data} = useMangaCaplist(id);
+  const [language, setLanguage] = useState<'en' | 'es'>('en'); // Estado para el idioma seleccionado
+
+  // Función para obtener el título del capítulo según el idioma
+  const getChapterTitle = (chapter: any) => {
+    if (chapter?.attributes?.title) {
+      return chapter.attributes.title; // Si el capítulo tiene un título, usarlo independientemente del idioma
+    }
+
+    const localizedTitle = chapter?.attributes?.names?.[language];
+    if (localizedTitle) {
+      return localizedTitle;
+    }
+
+    // Si no hay título localizado, devolver un título por defecto.  Esto es importante para que no aparezca undefined
+    return `Capítulo ${chapter?.attributes?.chapter}`;
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -26,8 +54,44 @@ export const ViewMangaScreen = () => {
             ? manga?.attributes.description.es
             : manga?.attributes.description.en || 'descripción no encontrada'}
         </Text>
+
+        {/* Selector de Idioma */}
+        <View style={styles.languageSelector}>
+          <TouchableOpacity
+            style={[
+              styles.languageButton,
+              language === 'en' && styles.languageButtonActive,
+            ]}
+            onPress={() => setLanguage('en')}>
+            <Text
+              style={[
+                styles.languageButtonText,
+                language === 'en' && styles.languageButtonTextActive,
+              ]}>
+              English
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.languageButton,
+              language === 'es' && styles.languageButtonActive,
+            ]}
+            onPress={() => setLanguage('es')}>
+            <Text
+              style={[
+                styles.languageButtonText,
+                language === 'es' && styles.languageButtonTextActive,
+              ]}>
+              Español
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <Text style={styles.capitulos}>
           Capítulos: {data?.data?.length || 'No hay capítulos'}
+        </Text>
+        <Text style={styles.capitulos}>
+          {data?.data?.map(cap => getChapterTitle(cap)).join(', ')}
         </Text>
       </View>
     </ScrollView>
@@ -63,5 +127,28 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontWeight: '400',
     marginTop: 16,
+  },
+  languageSelector: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
+  languageButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginHorizontal: 8,
+  },
+  languageButtonActive: {
+    backgroundColor: '#ddd',
+  },
+  languageButtonText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  languageButtonTextActive: {
+    fontWeight: 'bold',
   },
 });
