@@ -90,8 +90,12 @@ export const ViewMangaScreen = () => {
         <Text style={styles.capitulos}>
           Capítulos: {data?.data?.length || 'No hay capítulos'}
         </Text>
-        <Text style={styles.capitulos}>
-          {data?.data?.map(cap => getChapterTitle(cap)).join(', ')}
+        <Text>
+          {language === 'en'
+            ? data?.data?.map(cap => getChapterTitle(cap)).join(', ')
+            : language === 'es'
+            ? data?.data?.map(cap => getChapterTitle(cap)).join(', ')
+            : null}
         </Text>
       </View>
     </ScrollView>
