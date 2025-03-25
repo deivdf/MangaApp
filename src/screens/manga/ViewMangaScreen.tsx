@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 32,
+    fontWeight: '800',
     marginTop: 16,
     textAlign: 'center',
   },
@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     fontSize: 16,
     lineHeight: 24,
+    textAlign: 'justify',
+    marginRight: 20,
+    marginLeft: 20,
     marginTop: 16,
   },
   capitulos: {
