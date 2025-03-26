@@ -23,7 +23,7 @@ export const ButtonPage = ({offset, setOffset, data}: ButtonPageProps) => {
       </Button>
       <Button
         mode="contained"
-        buttonColor="#FF9D3D  "
+        buttonColor="#FF9D3D"
         onPress={() => setOffset((prev: any) => prev + limit)}
         disabled={isLastPage}
         style={styles.button}>

@@ -22,6 +22,9 @@ const screenOption = ({route}: any) => ({
 
     return <Icon name={iconName} size={size} color={color} />;
   },
+  tabBarStyle: {backgroundColor: '#FF9D3D'},
+  tabBarActiveTintColor: '#000000',
+  tabBarInactiveTintColor: '#697565',
   headerShown: false,
 });
 function HomeStack() {
