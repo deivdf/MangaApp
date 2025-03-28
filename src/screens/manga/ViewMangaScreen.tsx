@@ -11,7 +11,6 @@ import {Manga} from '../../services/types/manga';
 import {NavigationProp, RouteProp, useRoute} from '@react-navigation/native';
 import {Title} from 'react-native-paper';
 import {useMangaCaplist} from '../../hooks/useManga';
-import {useNavigation} from '@react-navigation/native';
 
 type Mangaprops = {
   ViewMangaScreen: {manga: Manga};
