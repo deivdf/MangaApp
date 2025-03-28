@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -8,17 +8,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Manga} from '../../services/types/manga';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {NavigationProp, RouteProp, useRoute} from '@react-navigation/native';
 import {Title} from 'react-native-paper';
 import {useMangaCaplist} from '../../hooks/useManga';
+import {useNavigation} from '@react-navigation/native';
 
 type Mangaprops = {
   ViewMangaScreen: {manga: Manga};
+  navigation: NavigationProp<any>;
 };
 
 type ViewMangaScreenRouteProp = RouteProp<Mangaprops, 'ViewMangaScreen'>;
 
-export const ViewMangaScreen = () => {
+export const ViewMangaScreen = ({navigation}: any) => {
   const route = useRoute<ViewMangaScreenRouteProp>(); // Obtiene los params
   const {manga} = route.params;
   const coverArt = manga?.relationships.find(r => r.type === 'cover_art');
@@ -30,19 +32,39 @@ export const ViewMangaScreen = () => {
   const [language, setLanguage] = useState<'en' | 'es'>('en'); // Estado para el idioma seleccionado
 
   // Función para obtener el título del capítulo según el idioma
-  const getChapterTitle = (chapter: any) => {
-    if (chapter?.attributes?.title) {
-      return chapter.attributes.title; // Si el capítulo tiene un título, usarlo independientemente del idioma
-    }
+  const getChapterTitle = useCallback(
+    (chapter: any) => {
+      if (chapter?.attributes?.title) {
+        return chapter.attributes.title; // Si el capítulo tiene un título, usarlo independientemente del idioma
+      }
 
-    const localizedTitle = chapter?.attributes?.names?.[language];
-    if (localizedTitle) {
-      return localizedTitle;
-    }
+      const localizedTitle = chapter?.attributes?.names?.[language];
+      if (localizedTitle) {
+        return localizedTitle;
+      }
 
-    // Si no hay título localizado, devolver un título por defecto.  Esto es importante para que no aparezca undefined
-    return `Capítulo ${chapter?.attributes?.chapter}`;
+      // Si no hay título localizado, devolver un título por defecto.  Esto es importante para que no aparezca undefined
+      return `Capítulo ${chapter?.attributes?.chapter}`;
+    },
+    [language],
+  );
+  const navigationTochapeter = (chapeterId: string) => {
+    navigation.navigate('ChapeterReaderScreen', {chapeterId}),
+      {chapeterId: chapeterId};
   };
+  //funcion que ordena los capitulos por numero organizadolos en compracion
+  const sortedChapters = data?.data
+    ? //revisa que exista el arreglo de capitulos y no sean nulos
+      [...data.data].sort((a: any, b: any) => {
+        //guarda un a copia de los capitulos para no modificar el original y aplica el ordenamiento con dos
+        //parametros para comparar los capitulos por numero ya que son strings en formato decimal
+        const chapterA = parseFloat(a?.attributes?.chapter || '0');
+        // los ordena de forma ascendente y los parsea para que sean numeros
+        const chapterB = parseFloat(b?.attributes?.chapter || '0');
+        return chapterA - chapterB;
+        // aqui se agrega el ordenamiento por numero de capitulos y se ordena deacuerdo a los capitulos si estan o no
+      })
+    : [];
 
   return (
     <ScrollView>
@@ -90,13 +112,13 @@ export const ViewMangaScreen = () => {
         <Text style={styles.capitulos}>
           Capítulos: {data?.data?.length || 'No hay capítulos'}
         </Text>
-        <Text>
-          {language === 'en'
-            ? data?.data?.map(cap => getChapterTitle(cap)).join(', ')
-            : language === 'es'
-            ? data?.data?.map(cap => getChapterTitle(cap)).join(', ')
-            : null}
-        </Text>
+        {sortedChapters.map((cap: any) => (
+          <TouchableOpacity
+            key={cap.id}
+            onPress={() => navigationTochapeter(cap.id)}>
+            <Text>{getChapterTitle(cap)}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );
