@@ -47,10 +47,6 @@ export const ViewMangaScreen = ({navigation}: any) => {
     },
     [language],
   );
-  const navigationTochapeter = (chapeterId: string) => {
-    navigation.navigate('ChapeterReaderScreen', {chapeterId}),
-      {chapeterId: chapeterId};
-  };
   //funcion que ordena los capitulos por numero organizadolos en compracion
   const sortedChapters = data?.data
     ? //revisa que exista el arreglo de capitulos y no sean nulos
@@ -114,8 +110,13 @@ export const ViewMangaScreen = ({navigation}: any) => {
         {sortedChapters.map((cap: any) => (
           <TouchableOpacity
             key={cap.id}
-            onPress={() => navigationTochapeter(cap.id)}>
-            <Text>{getChapterTitle(cap)}</Text>
+            onPress={() =>
+              navigation.navigate('ChapeterReaderScreen', {id: cap.id})
+            }>
+            <Text>
+              {getChapterTitle(cap)}
+              el id: {cap.id}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
