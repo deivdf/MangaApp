@@ -103,20 +103,19 @@ export const ViewMangaScreen = ({navigation}: any) => {
             </Text>
           </TouchableOpacity>
         </View>
+        {/*
+          <Text style={styles.capitulos}>
+            Capítulos: {data?.data?.length || 'No hay capítulos'}
+          </Text>
+          */}
 
-        <Text style={styles.capitulos}>
-          Capítulos: {data?.data?.length || 'No hay capítulos'}
-        </Text>
         {sortedChapters.map((cap: any) => (
           <TouchableOpacity
             key={cap.id}
             onPress={() =>
               navigation.navigate('ChapeterReaderScreen', {id: cap.id})
             }>
-            <Text>
-              {getChapterTitle(cap)}
-              el id: {cap.id}
-            </Text>
+            <Text>{getChapterTitle(cap)}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -158,6 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   languageSelector: {
+    marginBottom: 26,
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 16,

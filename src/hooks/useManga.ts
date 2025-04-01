@@ -1,6 +1,10 @@
 import {useQuery} from '@tanstack/react-query';
 import client from '../services/api/client';
-import {MangaListResponse, ChapetersRespones} from '../services/types/manga';
+import {
+  MangaListResponse,
+  ChapetersRespones,
+  ChapterImageResponse,
+} from '../services/types/manga';
 
 const fetchManga = async (offset: number): Promise<MangaListResponse> => {
   const {data} = await client.get('/manga', {
@@ -21,6 +25,18 @@ const fetchMangaCaplist = async (id: string): Promise<ChapetersRespones> => {
   });
   return data;
 };
+
+const fetchChapeterImage = async (
+  id: string,
+): Promise<ChapterImageResponse> => {
+  const {data} = await client.get(`/at-home/server/${id}`);
+  const baseUrl = data.baseUrl;
+  const chapeterHash = data.chapter.hash;
+  return data.chapter.data.map(
+    (page: string) => `${baseUrl}/data/${chapeterHash}/${page}`,
+  );
+};
+
 export const useMangalist = (offset: number) => {
   return useQuery({
     queryKey: ['mangalist', offset],
@@ -32,6 +48,15 @@ export const useMangaCaplist = (id: string) => {
   return useQuery({
     queryKey: ['mangaCaplist', id],
     queryFn: () => fetchMangaCaplist(id),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useChapeterImage = (id: string) => {
+  console.log('apirespuesta', fetchChapeterImage(id));
+  return useQuery({
+    queryKey: ['chapeterImage', id],
+    queryFn: () => fetchChapeterImage(id),
     staleTime: 1000 * 60 * 5,
   });
 };
