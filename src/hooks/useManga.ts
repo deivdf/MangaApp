@@ -17,6 +17,16 @@ const fetchManga = async (offset: number): Promise<MangaListResponse> => {
   return data;
 };
 
+const fetchMangaSearch = async (title: string): Promise<MangaListResponse> => {
+  const {data} = await client.get('/manga', {
+    params: {
+      limit: 10,
+      title,
+    },
+  });
+  return data;
+};
+
 const fetchMangaCaplist = async (id: string): Promise<ChapetersRespones> => {
   const {data} = await client.get(`/manga/${id}/feed`, {
     params: {
@@ -57,6 +67,13 @@ export const useChapeterImage = (id: string) => {
   return useQuery({
     queryKey: ['chapeterImage', id],
     queryFn: () => fetchChapeterImage(id),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+export const useMangaSearch = (title: string) => {
+  return useQuery({
+    queryKey: ['mangaSearch', title],
+    queryFn: () => fetchMangaSearch(title),
     staleTime: 1000 * 60 * 5,
   });
 };

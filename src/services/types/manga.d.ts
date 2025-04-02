@@ -69,12 +69,6 @@ interface MangaListResponse {
   offset: number;
   total: number;
 }
-type ChapterImageResponse = {
-  _h: number;
-  _i: number;
-  _j: string[];
-  _k: null;
-};
 
 export {
   Manga,
