@@ -40,11 +40,23 @@ function HomeStack() {
     </Stack.Navigator>
   );
 }
+function SearchStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="SerchScreen" component={SerchScreen} />
+      <Stack.Screen name="ViewMangaScreen" component={ViewMangaScreen} />
+      <Stack.Screen
+        name="ChapeterReaderScreen"
+        component={ChapeterReaderScreen}
+      />
+    </Stack.Navigator>
+  );
+}
 
 export const BottomNavigatorTab = () => (
   <Tab.Navigator screenOptions={screenOption}>
     <Tab.Screen name="Home" component={HomeStack} />
-    <Tab.Screen name="Search" component={SerchScreen} />
+    <Tab.Screen name="Search" component={SearchStack} />
     <Tab.Screen name="Save" component={SaveMangaScreen} />
   </Tab.Navigator>
 );

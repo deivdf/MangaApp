@@ -20,6 +20,7 @@ const fetchManga = async (offset: number): Promise<MangaListResponse> => {
 const fetchMangaSearch = async (title: string): Promise<MangaListResponse> => {
   const {data} = await client.get('/manga', {
     params: {
+      includes: ['cover_art'],
       limit: 10,
       title,
     },
